@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: transaction-generator
+  namespace: payment-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: transaction-generator
+  template:
+    metadata:
+      labels:
+        app: transaction-generator
+    spec:
+      containers:
+      - name: transaction-generator
+        image: transaction-generator:latest
+        env:
+        - name: API_BASE_URL
+          value: "http://api-service:8000/api/v1"
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m" 
